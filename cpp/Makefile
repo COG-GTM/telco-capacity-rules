@@ -6,10 +6,12 @@ CXXFLAGS ?= -std=c++17 -O2 -Wall -Wextra
 test: vectors_test
 	./vectors_test
 
-vectors.inc: tests/gen_vectors.py ../spec/vectors.json
+vectors_inc = tests/vectors.inc
+
+$(vectors_inc): tests/gen_vectors.py ../spec/vectors.json
 	python3 tests/gen_vectors.py
 
-vectors_test: tests/vectors_test.cpp vectors.inc include/telco_capacity/capacity.h
+vectors_test: tests/vectors_test.cpp $(vectors_inc) include/telco_capacity/capacity.h
 	$(CXX) $(CXXFLAGS) -Iinclude -Itests -o $@ tests/vectors_test.cpp
 
 clean:
