@@ -1,0 +1,9 @@
+[
+  {"total": 1000, "allocated": 600, "buffer": 150, "available": 250, "utilization_pct": 75.0},
+  {"total": 100, "allocated": 90, "buffer": 50, "available": 0, "utilization_pct": 140.0},
+  {"total": 0, "allocated": 0, "buffer": 0, "available": 0, "utilization_pct": 0.0},
+  {"total": 1000, "allocated": 0, "buffer": 0, "available": 1000, "utilization_pct": 0.0},
+  {"total": 10000, "allocated": 4300, "buffer": 0, "available": 5700, "utilization_pct": 43.0},
+  {"total": 3000, "allocated": 1000, "buffer": 333, "available": 1667, "utilization_pct": 44.43},
+  {"total": 1000, "allocated": 1000, "buffer": 0, "available": 0, "utilization_pct": 100.0}
+]
