@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "telco-capacity-rules"
-version = "0.1.0"
+version = "0.2.0"
 description = "Shared capacity rules for telco estates"
 requires-python = ">=3.9"
 dependencies = []
@@ -17,3 +17,4 @@ where = ["."]
 
 [tool.setuptools.package-data]
 telco_capacity = ["vectors.json"]
+telco_rules = ["billing_vectors.json"]

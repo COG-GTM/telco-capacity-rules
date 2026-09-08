@@ -1,0 +1,48 @@
+[
+  {
+    "fn": "usage_gb_rounded",
+    "profile": "meridian",
+    "args": {"usage_mb": 1024485},
+    "expected": 1001
+  },
+  {
+    "fn": "overage_gb",
+    "profile": "meridian",
+    "args": {"usage_mb": 1024485, "included_gb": 1000},
+    "expected": 1
+  },
+  {
+    "fn": "rate_overage",
+    "profile": "vantage_legacy",
+    "args": {"usage_mb": 1024485, "included_gb": 1000},
+    "expected": 5.82
+  },
+  {
+    "fn": "prorated_plan_charge",
+    "profile": "vantage_legacy",
+    "args": {
+      "monthly_fee": 310,
+      "previous_monthly_fee": 620,
+      "change_day": 31,
+      "period": "2026-07"
+    },
+    "expected": 610.0
+  },
+  {
+    "fn": "promo_is_live",
+    "profile": "vantage_legacy",
+    "args": {"issued_on": "2026-06-24", "period": "2026-07"},
+    "expected": true
+  },
+  {
+    "fn": "suspension_credit",
+    "profile": "vantage_legacy",
+    "args": {
+      "monthly_fee": 620,
+      "start_day": 10,
+      "end_day": 14,
+      "period": "2026-07"
+    },
+    "expected": 100.0
+  }
+]
