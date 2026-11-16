@@ -1,2 +1,7 @@
 cpp/tests/vectors.inc
 cpp/vectors_test
+cpp/unit_test
+__pycache__/
+*.egg-info/
+build/
+.pytest_cache/
