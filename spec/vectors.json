@@ -7,5 +7,6 @@
   {"name": "zero_buffer", "total": 10000, "allocated": 4300, "buffer": 0, "available": 5700, "utilization_pct": 43.0},
   {"name": "rounds_half_up", "total": 3000, "allocated": 1000, "buffer": 333, "available": 1667, "utilization_pct": 44.43},
   {"name": "fully_allocated", "total": 1000, "allocated": 1000, "buffer": 0, "available": 0, "utilization_pct": 100.0},
-  {"name": "buffer_consumes_remainder_exactly", "total": 500, "allocated": 450, "buffer": 50, "available": 0, "utilization_pct": 100.0}
+  {"name": "buffer_consumes_remainder_exactly", "total": 500, "allocated": 450, "buffer": 50, "available": 0, "utilization_pct": 100.0},
+  {"name": "halfway_rounds_up", "total": 16000, "allocated": 980, "buffer": 0, "available": 15020, "utilization_pct": 6.13}
 ]
