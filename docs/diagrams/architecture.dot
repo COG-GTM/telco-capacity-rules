@@ -1,0 +1,57 @@
+// Architecture of telco-capacity-rules on main.
+// Edit this file, then run docs/diagrams/render.sh to refresh the PNG and SVG.
+digraph telco_capacity_rules {
+  graph [rankdir=TB, fontname="DejaVu Sans", fontsize=18, nodesep=0.5, ranksep=0.6,
+         label="telco-capacity-rules: one spec, two implementations", labelloc=t, pad=0.3];
+  node  [fontname="DejaVu Sans", fontsize=16, shape=box, style="rounded,filled", fillcolor=white];
+  edge  [fontname="DejaVu Sans", fontsize=13];
+
+  spec [label="spec/vectors.json\n7 shared test vectors\n(total, allocated, buffer → available, utilization_pct)",
+        shape=note, fillcolor="#fff3c4"];
+
+  subgraph cluster_python {
+    label="python/  (package telco-capacity-rules 0.1.0, Python ≥3.9)";
+    style="rounded,filled"; fillcolor="#e8f1fb"; color="#4a7ab5"; fontsize=16;
+    py_pkg [label="telco_capacity/__init__.py\navailable_capacity · utilization_pct (Decimal, ROUND_HALF_UP)\ncan_support · vectors() · RULE"];
+    py_vec [label="telco_capacity/vectors.json\npackaged copy of the spec", shape=note, fillcolor="#fff3c4"];
+    py_build [label="pyproject.toml + setup.py\n(setuptools, no dependencies)"];
+    py_test [label="tests/test_vectors.py\n(pytest)", fillcolor="#e6f4e6"];
+    {rank=same; py_vec; py_build;}
+  }
+
+  subgraph cluster_cpp {
+    label="cpp/  (header-only, C++17)";
+    style="rounded,filled"; fillcolor="#f3eafb"; color="#8a5cb5"; fontsize=16;
+    cpp_hdr [label="include/telco_capacity/capacity.h\navailable_capacity · utilization_pct (integer half-up)\ncan_support · RULE"];
+    cpp_gen [label="tests/gen_vectors.py\nwrites tests/vectors.inc (git-ignored)"];
+    cpp_test [label="tests/vectors_test.cpp\n→ ./vectors_test (asserts)", fillcolor="#e6f4e6"];
+    cpp_make [label="Makefile\nmake -C cpp test"];
+  }
+
+  ci [label=".github/workflows/ci.yml\njobs: python, cpp\n(every push and pull request)", shape=component, fillcolor="#eeeeee"];
+
+  consumers [label="Consumers named in README (not in this repo)\nvantage-telco: pip git dependency\nmeridian-telco: header include",
+             shape=box, style="rounded,dashed", fillcolor=white];
+
+  spec -> py_test   [label="read and compared"];
+  py_vec -> py_pkg  [label="vectors()", dir=back];
+  py_pkg -> py_test [label="import"];
+  spec -> py_vec    [label="must stay identical", style=dashed];
+  py_build -> py_pkg [label="packages", style=dotted];
+
+  spec -> cpp_gen   [label="read", constraint=false];
+  cpp_gen -> cpp_test [label="vectors.inc"];
+  cpp_hdr -> cpp_test [label="#include"];
+  cpp_make -> cpp_gen [style=dotted, label="runs"];
+  cpp_make -> cpp_test [style=dotted, label="builds, runs"];
+
+  ci -> py_test   [style=dotted, label="pip install ./python pytest\npytest python/tests"];
+  ci -> cpp_make  [style=dotted, label="make -C cpp test", constraint=false];
+
+  {rank=same; spec; ci;}
+  py_test -> cpp_make [style=invis];
+  py_test -> cpp_hdr [style=invis];
+  cpp_test -> consumers [style=invis];
+  py_pkg -> consumers  [style=dashed];
+  cpp_hdr -> consumers [style=dashed];
+}
